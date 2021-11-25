@@ -28,26 +28,26 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<Schedule> findAll(int termInMonth, double interestRate, BigDecimal creditSum, Offer offer) {
 
         List<Schedule> schedules = new ArrayList<>();
-        BigDecimal bodySum = creditSum.divide(BigDecimal.valueOf(termInMonth), 2,
-                RoundingMode.CEILING);
+        double interestRateHere = interestRate / 12 / 100;
+        BigDecimal monthPayment = creditSum.multiply(BigDecimal.valueOf(
+                        interestRateHere + (interestRateHere / (Math.pow((1 + interestRateHere), termInMonth) - 1))))
+                .setScale(2, RoundingMode.CEILING);
         LocalDate date = LocalDate.now();
-
         for (int i = 0; i < termInMonth; i++) {
-            BigDecimal interestSum = creditSum.divide(BigDecimal.valueOf(interestRate), 2)
-                    .setScale(2, RoundingMode.CEILING);
-            creditSum = creditSum.subtract(bodySum)
-                    .setScale(2, RoundingMode.CEILING);
-            BigDecimal paymentSum = interestSum.add(bodySum)
-                    .setScale(2, RoundingMode.CEILING);
             Schedule schedule = new Schedule();
-            schedule.setBodySum(bodySum);
-            schedule.setPaymentSum(paymentSum);
+            schedule.setPaymentSum(monthPayment);
+            schedule.setPaymentDate(Date.valueOf(date));
+            BigDecimal interestSum = creditSum.multiply(BigDecimal.valueOf(interestRateHere))
+                    .setScale(2, RoundingMode.CEILING);
             schedule.setInterestSum(interestSum);
-            schedule.setOffer(offer);
-            schedule.setPaymentDate(Date.valueOf(date.plusMonths(i)));
+            BigDecimal bodySum = monthPayment.subtract(interestSum)
+                    .setScale(2, RoundingMode.CEILING);
+            schedule.setBodySum(bodySum);
             schedules.add(schedule);
+            schedule.setOffer(offer);
+            date = date.plusMonths(1);
+            creditSum = creditSum.subtract(bodySum);
         }
-
         return schedules;
     }
 
