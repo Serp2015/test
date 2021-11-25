@@ -4,7 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import com.haulmont.test.entity.Bank;
+import com.haulmont.test.entity.Client;
+import com.haulmont.test.entity.Credit;
 import com.haulmont.test.service.BankService;
+import com.haulmont.test.service.ClientService;
+import com.haulmont.test.service.CreditService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +24,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BankController {
 
     private BankService bankService;
+    private ClientService clientService;
+    private CreditService creditService;
 
-    public BankController(BankService theBankService) {
-        bankService = theBankService;
+    @Autowired
+    public void setBankService(BankService bankService) {
+        this.bankService = bankService;
+    }
+
+    @Autowired
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    @Autowired
+    public void setCreditService(CreditService creditService) {
+        this.creditService = creditService;
     }
 
     @GetMapping("/list")
@@ -57,4 +75,37 @@ public class BankController {
         bankService.deleteById(theId);
         return "redirect:/banks/list";
     }
+
+    @GetMapping("/showFormForClientCreditList")
+    public String showFormForSchedule(@RequestParam("bankId") UUID theId, Model theModel) {
+        Bank theBank = bankService.findById(theId);
+        theModel.addAttribute("bank", theBank);
+        return "banks/list-clients-credits";
+    }
+
+    @GetMapping("/showFormForAddClientCredit")
+    public String showFormForAddClientCredit(@RequestParam("bankId") UUID theId, Model theModel) {
+        Bank theBank = bankService.findById(theId);
+        List<Client> clients = clientService.findAll();
+//        List<Credit> credits = creditService.findAll();
+        theModel.addAttribute("bank", theBank);
+        theModel.addAttribute("clients", clients);
+//        theModel.addAttribute("credits", credits);
+        return "banks/client-credit-form";
+    }
+
+    @PostMapping("/saveClientCredit")
+    public String saveClientCredit(@ModelAttribute("bank") Bank theBank) {
+        bankService.save(theBank);
+        return "redirect:/banks/list-clients-credits";
+    }
+
+//    @GetMapping("/saveClientCredit")
+//    public String saveClientCredit(@RequestParam("bankId") UUID theId,
+//                                    Model theModel) {
+//        Bank theBank = bankService.findById(theId);
+//        theModel.addAttribute("bank", theBank);
+//        return "redirect:/banks/list-clients-credits";
+//    }
+
 }

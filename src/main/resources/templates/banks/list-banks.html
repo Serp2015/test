@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>Bank Directory</title>
 </head>
@@ -38,7 +39,6 @@
         <tr th:each="tempBank : ${banks}">
 
             <td th:text="${tempBank.title}"/>
-            <!-- Add credits and clients later -->
             <td>
                 <!-- Add "update" button/link -->
                 <a th:href="@{/banks/showFormForUpdate(bankId=${tempBank.id})}"
@@ -51,6 +51,12 @@
                    class="btn btn-danger btn-sm"
                    onclick="if (!(confirm('Are you sure you want to delete this bank?'))) return false">
                     Delete
+                </a>
+
+                <!-- Add "client & credit list" button/link -->
+                <a th:href="@{/banks/showFormForClientCreditList(bankId=${tempBank.id})}"
+                   class="btn btn-success btn-sm">
+                    Client & Credit List
                 </a>
 
             </td>

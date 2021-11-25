@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Add Client / Credit</title>
+</head>
+
+<body>
+<div class="container">
+
+    <h3><a th:text="${bank.title}"></a></h3>
+    <hr>
+
+    <p class="h4 mb-4">Add Client / Credit</p>
+
+    <form action="#" th:action="@{/banks/saveClientCredit}"
+          th:object="${bank}" method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{title}"/>
+
+<!--        <select name="clientId" class="form-control mb-4 col-4" th:field="*{client}">-->
+<!--            <option value="">Add Client</option>-->
+<!--            <option th:each="tempClient : ${clients}" th:value="${tempClient.id}"-->
+<!--                    th:text="${tempClient.fullName}">-->
+<!--            </option>-->
+<!--        </select>-->
+
+<!--        <select name="creditId" class="form-control mb-4 col-4" th:field="*{credit}">-->
+<!--            <option value="">Add Credit</option>-->
+<!--            <option th:each="tempCredit : ${credits}" th:value="${tempCredit.id}"-->
+<!--                    th:text="${tempCredit.title}">-->
+<!--            </option>-->
+<!--        </select>-->
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+
+    <hr>
+    <a th:href="@{/banks/showFormForClientCreditList(bankId=${bank.id})}">Back to Client & Credit Directory</a>
+
+</div>
+</body>
+</html>
