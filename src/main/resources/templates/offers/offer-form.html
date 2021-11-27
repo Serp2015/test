@@ -32,6 +32,8 @@
                     th:text="${tempClient.fullName}">
             </option>
         </select>
+        <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">error</div>
+        <br/>
 
         <select name="creditId" class="form-control mb-4 col-4" th:field="*{credit}">
             <option value="">Add Credit</option>
@@ -39,12 +41,18 @@
                     th:text="${tempCredit.title}">
             </option>
         </select>
+        <div style="color: red" th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}">error</div>
+        <br/>
 
         <input type="text" th:field="*{creditSum}"
                class="form-control mb-4 col-4" placeholder="Credit Sum">
+        <div style="color: red" th:if="${#fields.hasErrors('creditSum')}" th:errors="*{creditSum}">error</div>
+        <br/>
 
         <input type="text" th:field="*{termInMonth}"
                class="form-control mb-4 col-4" placeholder="Term In Months">
+        <div style="color: red" th:if="${#fields.hasErrors('termInMonth')}" th:errors="*{termInMonth}">error</div>
+        <br/>
 
         <button type="submit" class="btn btn-info col-2">Save</button>
 
@@ -52,6 +60,7 @@
 
     <hr>
     <a th:href="@{/offers/list}">Back to Offers Directory</a>
+    <p></p>
 
 </div>
 </body>

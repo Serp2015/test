@@ -1,6 +1,7 @@
 package com.haulmont.test.service;
 
 import com.haulmont.test.dao.ClientRepository;
+import com.haulmont.test.entity.Bank;
 import com.haulmont.test.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void save(Client theClient) {
+        Bank bank = theClient.getBank();
+        if (bank != null) {
+            bank.addClient(theClient);
+        }
         clientRepository.save(theClient);
     }
 

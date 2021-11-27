@@ -5,8 +5,11 @@ import com.haulmont.test.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,7 +63,9 @@ public class OfferController {
     @GetMapping("/showFormForSchedule")
     public String showFormForSchedule(@RequestParam("offerId") UUID theId, Model theModel) {
         Offer theOffer = offerService.findById(theId);
-        theModel.addAttribute("offer", theOffer);
+        List<Schedule> schedules = theOffer.getSchedules();
+        schedules.sort(Comparator.comparing(Schedule::getPaymentDate));
+        theModel.addAttribute("schedules",schedules);
         return "offers/list-schedules";
     }
 
@@ -76,7 +81,11 @@ public class OfferController {
     }
 
     @PostMapping("/save")
-    public String saveOffer(@ModelAttribute("offer") Offer theOffer) {
+    public String saveOffer(@ModelAttribute("offer") @Valid Offer theOffer,
+                            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "offers/offer-form";
+        }
         offerService.save(theOffer);
         List<Schedule> schedules = scheduleService.findAll(theOffer.getTermInMonth(),
                 theOffer.getCredit().getInterestRate(), theOffer.getCreditSum(), theOffer);

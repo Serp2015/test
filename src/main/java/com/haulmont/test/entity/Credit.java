@@ -3,6 +3,7 @@ package com.haulmont.test.entity;
 import org.hibernate.id.UUIDGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,16 +17,19 @@ public class Credit {
     private UUID id;
 
     @Column(name = "title")
+    @NotEmpty(message = "Put title")
     private String title;
 
     @Column(name = "limit")
+    @Min(value = 100, message = "Limit should be more then 100")
     private long limit;
 
     @Column(name = "interest_rate")
+    @Min(value = 1, message = "Interest rate should be more then 1%")
     private double interestRate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "bank_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "bank_id")
     private Bank bank;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credit", cascade = CascadeType.ALL)

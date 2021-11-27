@@ -22,6 +22,7 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
+            <th>No</th>
             <th>Payment Date</th>
             <th>Payment Sum</th>
             <th>Body Sum</th>
@@ -31,8 +32,9 @@
         </thead>
 
         <tbody>
-        <tr th:each="tempSchedule : ${offer.schedules}">
+        <tr th:each="tempSchedule, stat : ${schedules}">
 
+            <td th:text="${stat.index + 1}"></td>
             <td th:text="${tempSchedule.paymentDate}"></td>
             <td th:text="${tempSchedule.paymentSum}"></td>
             <td th:text="${tempSchedule.bodySum}"></td>

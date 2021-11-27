@@ -31,7 +31,6 @@
         <tr>
             <th>Title</th>
             <th>Action</th>
-            <!-- Add credits and clients later -->
         </tr>
         </thead>
 
@@ -53,10 +52,16 @@
                     Delete
                 </a>
 
-                <!-- Add "client & credit list" button/link -->
-                <a th:href="@{/banks/showFormForClientCreditList(bankId=${tempBank.id})}"
+                <!-- Add "client list" button/link -->
+                <a th:href="@{/banks/showFormForClientList(bankId=${tempBank.id})}"
                    class="btn btn-success btn-sm">
-                    Client & Credit List
+                    Client List
+                </a>
+
+                <!-- Add "credit list" button/link -->
+                <a th:href="@{/banks/showFormForCreditList(bankId=${tempBank.id})}"
+                   class="btn btn-success btn-sm">
+                    Credit List
                 </a>
 
             </td>
@@ -66,6 +71,7 @@
     </table>
 
     <a th:href="@{/tasks/list}">Back to Task Directory</a>
+    <p></p>
 
 </div>
 

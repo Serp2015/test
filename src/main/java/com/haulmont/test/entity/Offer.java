@@ -3,6 +3,9 @@ package com.haulmont.test.entity;
 import org.hibernate.id.UUIDGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -17,17 +20,22 @@ public class Offer {
     private UUID id;
 
     @Column(name = "credit_sum")
+    @DecimalMin(value = "100", message = "Credit sum should be more then 100")
+    @NotNull(message = "Credit sum should be more then 100")
     private BigDecimal creditSum;
 
     @Column(name = "credit_term")
+    @Min(value = 1, message = "Term should be more then 1 month")
     private int termInMonth;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "client_id")
+    @NotNull(message = "Add client")
     private Client client;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "credit_id")
+    @NotNull(message = "Add credit")
     private Credit credit;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL)

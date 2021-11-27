@@ -27,15 +27,30 @@
 
         <input type="text" th:field="*{fullName}"
                class="form-control mb-4 col-4" placeholder="Full name">
+        <div style="color: red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">error</div>
+        <br/>
 
         <input type="text" th:field="*{phoneNumber}"
                class="form-control mb-4 col-4" placeholder="Phone number">
+        <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">error</div>
+        <br/>
 
         <input type="text" th:field="*{email}"
                class="form-control mb-4 col-4" placeholder="Email">
+        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">error</div>
+        <br/>
 
         <input type="text" th:field="*{passportNumber}"
                class="form-control mb-4 col-4" placeholder="Passport number">
+        <div style="color: red" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}">error</div>
+        <br/>
+
+        <select name="bankId" class="form-control mb-4 col-4" th:field="*{bank}">
+            <option value="">Add Bank</option>
+            <option th:each="tempBank : ${banks}" th:value="${tempBank.id}"
+                    th:text="${tempBank.title}">
+            </option>
+        </select>
 
         <button type="submit" class="btn btn-info col-2">Save</button>
 
@@ -43,6 +58,7 @@
 
     <hr>
     <a th:href="@{/clients/list}">Back to Clients Directory</a>
+    <p></p>
 
 </div>
 </body>

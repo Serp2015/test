@@ -3,6 +3,9 @@ package com.haulmont.test.entity;
 import org.hibernate.id.UUIDGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,19 +19,22 @@ public class Client {
     private UUID id;
 
     @Column(name = "full_name")
+    @NotEmpty(message = "Put full name")
     private String fullName;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "email")
+    @Email(message = "Put email")
     private String email;
 
     @Column(name = "passport_number")
+    @Min(value = 1, message = "Put passport number")
     private int passportNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "bank_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "bank_id")
     private Bank bank;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)

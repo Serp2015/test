@@ -3,6 +3,8 @@ package com.haulmont.test.entity;
 import org.hibernate.id.UUIDGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,14 +18,13 @@ public class Bank {
     private UUID id;
 
     @Column(name = "title")
+    @NotEmpty(message = "Title should not be empty")
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "bank_client", joinColumns = @JoinColumn(name = "bank_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
+    @OneToMany(mappedBy = "bank", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Client> clients;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "bank_credit", joinColumns = @JoinColumn(name = "bank_id"), inverseJoinColumns = @JoinColumn(name = "credit_id"))
+    @OneToMany(mappedBy = "bank", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Credit> credits;
 
     public Bank() {
@@ -63,5 +64,25 @@ public class Bank {
 
     public void setCredits(List<Credit> credits) {
         this.credits = credits;
+    }
+
+    public void addCredit(Credit credit) {
+        if (credits == null) {
+            credits = new ArrayList<>();
+        }
+        if (!credits.contains(credit)) {
+            credits.add(credit);
+        }
+        credit.setBank(this);
+    }
+
+    public void addClient(Client client) {
+        if (clients == null) {
+            clients = new ArrayList<>();
+        }
+        if (!clients.contains(client)) {
+            clients.add(client);
+        }
+        client.setBank(this);
     }
 }
