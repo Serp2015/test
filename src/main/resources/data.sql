@@ -1,84 +1,64 @@
-create table BANK
+CREATE TABLE bank
 (
-    ID BINARY(255) not null
-        primary key,
-    TITLE VARCHAR(255)
+    id    UUID NOT NULL,
+    title VARCHAR(255),
+    CONSTRAINT pk_bank PRIMARY KEY (id)
 );
 
-create table CLIENT
+CREATE TABLE client
 (
-    ID BINARY(255) not null
-        primary key,
-    EMAIL VARCHAR(255),
-    FULL_NAME VARCHAR(255),
-    PASSPORT_NUMBER INTEGER,
-    PHONE_NUMBER VARCHAR(255)
+    id              UUID NOT NULL,
+    full_name       VARCHAR(255),
+    phone_number    VARCHAR(255),
+    email           VARCHAR(255),
+    passport_number INT,
+    bank_id         UUID,
+    CONSTRAINT pk_client PRIMARY KEY (id)
 );
 
-create table BANK_CLIENT
+ALTER TABLE client
+    ADD CONSTRAINT FK_CLIENT_ON_BANK FOREIGN KEY (bank_id) REFERENCES bank (id);
+
+CREATE TABLE credit
 (
-    BANK_ID BINARY(255) not null
-        constraint FKO83CD4U73O6OO0XV4IFDVMJ68
-            references BANK,
-    CLIENT_ID BINARY(255) not null
-        constraint FK5HHV8N3QSEJATVL50CXV2EJKU
-            references CLIENT
+    id            UUID NOT NULL,
+    title         VARCHAR(255),
+    limit         BIGINT,
+    interest_rate DOUBLE,
+    bank_id       UUID,
+    CONSTRAINT pk_credit PRIMARY KEY (id)
 );
 
-create table BANK_ID
+ALTER TABLE credit
+    ADD CONSTRAINT FK_CREDIT_ON_BANK FOREIGN KEY (bank_id) REFERENCES bank (id);
+
+CREATE TABLE offer
 (
-    BANK_ID BINARY(255)
-        constraint FK23CYHT9YSL3JRCP7VGJ75RJXS
-            references BANK,
-    ID BINARY(255) not null
-        primary key
-        constraint FK246ME3OX93UQ27S8XOCVEPJSS
-            references CLIENT
+    id          UUID NOT NULL,
+    credit_sum  DECIMAL,
+    credit_term INT,
+    client_id   UUID,
+    credit_id   UUID,
+    CONSTRAINT pk_offer PRIMARY KEY (id)
 );
 
-create table CREDIT
+ALTER TABLE offer
+    ADD CONSTRAINT FK_OFFER_ON_CLIENT FOREIGN KEY (client_id) REFERENCES client (id);
+
+ALTER TABLE offer
+    ADD CONSTRAINT FK_OFFER_ON_CREDIT FOREIGN KEY (credit_id) REFERENCES credit (id);
+
+CREATE TABLE schedule
 (
-    ID BINARY(255) not null
-        primary key,
-    INTEREST_RATE DOUBLE,
-    LIMIT BIGINT,
-    TITLE VARCHAR(255)
+    id           UUID NOT NULL,
+    payment_date date,
+    payment_sum  DECIMAL,
+    body_sum     DECIMAL,
+    interest_sum DECIMAL,
+    offer_id     UUID,
+    CONSTRAINT pk_schedule PRIMARY KEY (id)
 );
 
-create table BANK_CREDIT
-(
-    BANK_ID BINARY(255) not null
-        constraint FKOTD3N856IFSF5K0TEYWUAE5FI
-            references BANK,
-    CREDIT_ID BINARY(255) not null
-        constraint FKFC4OYGP67UPOV1KIR79ML4HQA
-            references CREDIT
-);
-
-create table SCHEDULE
-(
-    ID BINARY(255) not null
-        primary key,
-    BODY_SUM NUMERIC(19,2),
-    INTEREST_SUM NUMERIC(19,2),
-    PAYMENT_DATE DATE,
-    PAYMENT_SUM NUMERIC(19,2)
-);
-
-create table OFFER
-(
-    ID BINARY(255) not null
-        primary key,
-    CREDIT_SUM NUMERIC(19,2),
-    CREDIT_TERM INTEGER,
-    CLIENT_ID BINARY(255)
-        constraint FKQH66WUQH9UB2OQTULWTFNHI1N
-            references CLIENT,
-    CREDIT_ID BINARY(255)
-        constraint FKLRBDWF6ATJX5KF10H12IGMXRJ
-            references CREDIT,
-    SCHEDULE_ID BINARY(255)
-        constraint FK1N9C3WR4XKDANJAHW3VELWHHQ
-            references SCHEDULE
-);
+ALTER TABLE schedule
+    ADD CONSTRAINT FK_SCHEDULE_ON_OFFER FOREIGN KEY (offer_id) REFERENCES offer (id);
 

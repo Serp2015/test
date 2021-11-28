@@ -29,6 +29,7 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
+            <th>No</th>
             <th>Title</th>
             <th>Limit</th>
             <th>Interest Rate</th>
@@ -38,8 +39,9 @@
         </thead>
 
         <tbody>
-        <tr th:each="tempCredit : ${credits}">
+        <tr th:each="tempCredit, stat : ${credits}">
 
+            <td th:text="${stat.index + 1}"></td>
             <td th:text="${tempCredit.title}"/>
             <td th:text="${tempCredit.limit}"/>
             <td th:text="${tempCredit.interestRate}"/>

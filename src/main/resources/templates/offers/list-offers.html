@@ -29,6 +29,7 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
+            <th>No</th>
             <th>Client</th>
             <th>Credit</th>
             <th>Credit Sum</th>
@@ -39,8 +40,9 @@
         </thead>
 
         <tbody>
-        <tr th:each="tempOffer : ${offers}">
+        <tr th:each="tempOffer, stat : ${offers}">
 
+            <td th:text="${stat.index + 1}"></td>
             <td th:text="${tempOffer.client.fullName}"></td>
             <td th:text="${tempOffer.credit.title}"></td>
             <td th:text="${tempOffer.creditSum}"></td>

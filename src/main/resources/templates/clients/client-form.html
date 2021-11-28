@@ -45,6 +45,7 @@
         <div style="color: red" th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}">error</div>
         <br/>
 
+        to delete the bank select the first line
         <select name="bankId" class="form-control mb-4 col-4" th:field="*{bank}">
             <option value="">Add Bank</option>
             <option th:each="tempBank : ${banks}" th:value="${tempBank.id}"

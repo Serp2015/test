@@ -1,6 +1,7 @@
 package com.haulmont.test.service;
 
 import com.haulmont.test.entity.Bank;
+import com.haulmont.test.entity.Client;
 import com.haulmont.test.entity.Credit;
 
 import java.util.List;
@@ -12,5 +13,4 @@ public interface BankService {
     Bank findById(UUID theId);
     void save(Bank theBank);
     void deleteById(UUID theId);
-    void addCredit(Credit theCredit, UUID uuid);
 }

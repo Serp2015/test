@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -65,7 +67,11 @@ public class OfferController {
         Offer theOffer = offerService.findById(theId);
         List<Schedule> schedules = theOffer.getSchedules();
         schedules.sort(Comparator.comparing(Schedule::getPaymentDate));
+        List<BigDecimal> bigDecimals = new ArrayList<>();
+        schedules.forEach(x -> bigDecimals.add(x.getPaymentSum()));
+        BigDecimal totalSum = bigDecimals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
         theModel.addAttribute("schedules",schedules);
+        theModel.addAttribute("totalSum", totalSum);
         return "offers/list-schedules";
     }
 

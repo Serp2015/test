@@ -29,14 +29,16 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
+            <th>No</th>
             <th>Title</th>
             <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="tempBank : ${banks}">
+        <tr th:each="tempBank, stat : ${banks}">
 
+            <td th:text="${stat.index + 1}"></td>
             <td th:text="${tempBank.title}"/>
             <td>
                 <!-- Add "update" button/link -->

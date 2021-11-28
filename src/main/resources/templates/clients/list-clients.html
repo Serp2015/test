@@ -29,6 +29,7 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
+            <th>No</th>
             <th>Full Name</th>
             <th>Phone Number</th>
             <th>Email</th>
@@ -39,8 +40,9 @@
         </thead>
 
         <tbody>
-        <tr th:each="tempClient : ${clients}">
+        <tr th:each="tempClient, stat : ${clients}">
 
+            <td th:text="${stat.index + 1}"></td>
             <td th:text="${tempClient.fullName}"/>
             <td th:text="${tempClient.phoneNumber}"/>
             <td th:text="${tempClient.email}"/>

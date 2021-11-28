@@ -19,28 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
-
 @Controller
 @RequestMapping("/banks")
 public class BankController {
 
     private BankService bankService;
-    private ClientService clientService;
-    private CreditService creditService;
 
     @Autowired
     public void setBankService(BankService bankService) {
         this.bankService = bankService;
-    }
-
-    @Autowired
-    public void setClientService(ClientService clientService) {
-        this.clientService = clientService;
-    }
-
-    @Autowired
-    public void setCreditService(CreditService creditService) {
-        this.creditService = creditService;
     }
 
     @GetMapping("/list")
@@ -81,7 +68,7 @@ public class BankController {
         return "redirect:/banks/list";
     }
 
-   @GetMapping("/showFormForClientList")
+    @GetMapping("/showFormForClientList")
     public String showFormForClient(@RequestParam("bankId") UUID theId, Model theModel) {
         Bank theBank = bankService.findById(theId);
         theModel.addAttribute("bank", theBank);

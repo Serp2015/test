@@ -2,6 +2,7 @@ package com.haulmont.test.service;
 
 import com.haulmont.test.dao.BankRepository;
 import com.haulmont.test.entity.Bank;
+import com.haulmont.test.entity.Client;
 import com.haulmont.test.entity.Credit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,12 +49,6 @@ public class BankServiceImpl implements BankService {
     @Override
     public void deleteById(UUID theId) {
         bankRepository.deleteById(theId);
-    }
-
-    @Override
-    public void addCredit(Credit theCredit, UUID uuid) {
-        Bank bank = bankRepository.findBankById(uuid);
-        bank.addCredit(theCredit);
     }
 
 }
