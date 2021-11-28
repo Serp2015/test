@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Offer Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Offer Directory</h3>
+    <hr>
+
+    <!-- Add a button -->
+    <a th:href="@{/offers/showFormForAdd}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Offer
+    </a>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>No</th>
+            <th>Client</th>
+            <th>Credit</th>
+            <th>Credit Sum</th>
+            <th>Months</th>
+            <th>Action</th>
+            <!-- Add offers and offers later -->
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempOffer, stat : ${offers}">
+
+            <td th:text="${stat.index + 1}"></td>
+            <td th:text="${tempOffer.client.fullName}"></td>
+            <td th:text="${tempOffer.credit.title}"></td>
+            <td th:text="${tempOffer.creditSum}"></td>
+            <td th:text="${tempOffer.termInMonth}"></td>
+            <td>
+                <!-- Add "update" button/link -->
+                <a th:href="@{/offers/showFormForUpdate(offerId=${tempOffer.id})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
+
+                <!-- Add "delete" button/link -->
+                <a th:href="@{/offers/delete(offerId=${tempOffer.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Are you sure you want to delete this offer?'))) return false">
+                    Delete
+                </a>
+
+                <!-- Add "schedule" button/link -->
+                <a th:href="@{/offers/showFormForSchedule(offerId=${tempOffer.id})}"
+                   class="btn btn-success btn-sm">
+                    Payment Schedule
+                </a>
+
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/tasks/list}">Back to Task Directory</a>
+    <p></p>
+
+</div>
+
+</body>
+</html>

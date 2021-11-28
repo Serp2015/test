@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Task Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Task Directory</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Select an option to view</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td><a th:href="@{/banks/list}">Banks List</a></td>
+        </tr>
+        <tr>
+            <td><a th:href="@{/clients/list}">Clients List</a></td>
+        </tr>
+        <tr>
+            <td><a th:href="@{/credits/list}">Credits List</a></td>
+        </tr>
+        <tr>
+            <td><a th:href="@{/offers/list}">Offers List</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
