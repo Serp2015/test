@@ -5,4 +5,4 @@ Java 8,
 Spring boot,
 Spring data jpa,
 Thymeleaf,
-Сервер баз данных: HSQLDB
+HSQLDB.
