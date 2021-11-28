@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,7 +71,7 @@ public class OfferController {
         List<BigDecimal> bigDecimals = new ArrayList<>();
         schedules.forEach(x -> bigDecimals.add(x.getPaymentSum()));
         BigDecimal totalSum = bigDecimals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-        theModel.addAttribute("schedules",schedules);
+        theModel.addAttribute("schedules", schedules);
         theModel.addAttribute("totalSum", totalSum);
         return "offers/list-schedules";
     }
@@ -89,6 +90,10 @@ public class OfferController {
     @PostMapping("/save")
     public String saveOffer(@ModelAttribute("offer") @Valid Offer theOffer,
                             BindingResult bindingResult) {
+        if (theOffer.getCreditSum().doubleValue() > theOffer.getCredit().getLimit()) {
+            bindingResult.addError(new FieldError("offer", "creditSum",
+                    "Credit sum should be less then limit"));
+        }
         if (bindingResult.hasErrors()) {
             return "offers/offer-form";
         }

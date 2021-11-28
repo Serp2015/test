@@ -10,6 +10,6 @@ public class TaskController {
 
     @GetMapping("/list")
     public String listTasks() {
-        return "/list-tasks";
+        return "list-tasks";
     }
 }
