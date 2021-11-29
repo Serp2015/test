@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -89,12 +90,16 @@ public class OfferController {
 
     @PostMapping("/save")
     public String saveOffer(@ModelAttribute("offer") @Valid Offer theOffer,
-                            BindingResult bindingResult) {
+                            BindingResult bindingResult, Model theModel) {
         if (theOffer.getCreditSum().doubleValue() > theOffer.getCredit().getLimit()) {
             bindingResult.addError(new FieldError("offer", "creditSum",
                     "Credit sum should be less then limit"));
         }
         if (bindingResult.hasErrors()) {
+            List<Client> clients = clientService.findAll();
+            List<Credit> credits = creditService.findAll();
+            theModel.addAttribute("clients", clients);
+            theModel.addAttribute("credits", credits);
             return "offers/offer-form";
         }
         offerService.save(theOffer);

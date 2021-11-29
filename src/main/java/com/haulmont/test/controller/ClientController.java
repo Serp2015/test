@@ -58,8 +58,10 @@ public class ClientController {
 
     @PostMapping("/save")
     public String saveClient(@ModelAttribute("client") @Valid Client theClient,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult, Model theModel) {
         if (bindingResult.hasErrors()) {
+            List<Bank> banks = bankService.findAll();
+            theModel.addAttribute("banks", banks);
             return "clients/client-form";
         }
         clientService.save(theClient);

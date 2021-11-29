@@ -58,8 +58,10 @@ public class CreditController {
 
     @PostMapping("/save")
     public String saveCredit(@ModelAttribute("credit") @Valid Credit theCredit,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult, Model theModel) {
         if (bindingResult.hasErrors()) {
+            List<Bank> banks = bankService.findAll();
+            theModel.addAttribute("banks", banks);
             return "credits/credit-form";
         }
         creditService.save(theCredit);
