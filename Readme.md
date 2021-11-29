@@ -6,3 +6,5 @@ Spring boot,
 Spring data jpa,
 Thymeleaf,
 HSQLDB.
+
+To view, type in the browser: localhost: 8080
