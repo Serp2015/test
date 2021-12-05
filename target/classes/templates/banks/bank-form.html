@@ -25,9 +25,9 @@
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}"/>
-
+        Title
         <input type="text" th:field="*{title}"
-               class="form-control mb-4 col-4" placeholder="Title">
+               class="form-control mb-4 col-4" placeholder="Enter title">
         <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</div>
         <br/>
 

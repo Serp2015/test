@@ -25,32 +25,32 @@
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}"/>
-
+        Client
         <select name="clientId" class="form-control mb-4 col-4" th:field="*{client}">
-            <option value="">Add Client</option>
+            <option value="">Add client</option>
             <option th:each="tempClient : ${clients}" th:value="${tempClient.id}"
                     th:text="${tempClient.fullName}">
             </option>
         </select>
         <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">error</div>
         <br/>
-
+        Credit
         <select name="creditId" class="form-control mb-4 col-4" th:field="*{credit}">
-            <option value="">Add Credit</option>
+            <option value="">Add credit</option>
             <option th:each="tempCredit : ${credits}" th:value="${tempCredit.id}"
                     th:text="${tempCredit.title}">
             </option>
         </select>
         <div style="color: red" th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}">error</div>
         <br/>
-
+        Credit Sum
         <input type="text" th:field="*{creditSum}"
-               class="form-control mb-4 col-4" placeholder="Credit Sum">
+               class="form-control mb-4 col-4" placeholder="Enter credit sum">
         <div style="color: red" th:if="${#fields.hasErrors('creditSum')}" th:errors="*{creditSum}">error</div>
         <br/>
-
+        Term in months
         <input type="text" th:field="*{termInMonth}"
-               class="form-control mb-4 col-4" placeholder="Term In Months">
+               class="form-control mb-4 col-4" placeholder="Enter term in months">
         <div style="color: red" th:if="${#fields.hasErrors('termInMonth')}" th:errors="*{termInMonth}">error</div>
         <br/>
 

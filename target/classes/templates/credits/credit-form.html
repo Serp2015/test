@@ -24,23 +24,23 @@
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}"/>
-
+        Title
         <input type="text" th:field="*{title}" id="title"
-               class="form-control mb-4 col-4" placeholder="Title">
+               class="form-control mb-4 col-4" placeholder="Enter title">
         <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">error</div>
         <br/>
-
+        Limit
         <input type="text" th:field="*{limit}" id="limit"
-               class="form-control mb-4 col-4" placeholder="Limit">
+               class="form-control mb-4 col-4" placeholder="Enter limit">
         <div style="color: red" th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">error</div>
         <br/>
-
+        Interest rate
         <input type="text" th:field="*{interestRate}" id="interestRate"
-               class="form-control mb-4 col-4" placeholder="Interest Rate">
+               class="form-control mb-4 col-4" placeholder="Enter interest rate">
         <div style="color: red" th:if="${#fields.hasErrors('interestRate')}" th:errors="*{interestRate}">error</div>
         <br/>
 
-        to delete the bank select the first line
+        Bank (to delete the bank select the first line)
         <select name="bankId" class="form-control mb-4 col-4" th:field="*{bank}">
             <option value="">Add Bank</option>
             <option th:each="tempBank : ${banks}" th:value="${tempBank.id}"
